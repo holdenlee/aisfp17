@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}  
+
+\input{packages_only_arxiv.tex}
+\input{theorems_std.tex}
+\input{macros.tex}
+
+
+\newcommand{\citep}[1]{\cite{#1}}
+\newcommand{\weight}[0]{w} %in case I want to change this
+
+
+%\addbibresource{bib.bib}
+
+\begin{document}
+
+\title{AI Safety}
+
+\author{AISFP 2017}
+%add names
+
+\date{\today}
+\maketitle
+\begin{abstract}
+Abstract here.
+\end{abstract}
+
+\tableofcontents
+
+\section{Cartesian and naturalized agents}
+%Introduction}
+
+\begin{enumerate}
+\item
+Consider a robot thinking about a video game: what inputs would cause me to win?
+
+It thinks about what happens if it puts in inputs A and B; which input would give good outputs? It does something like argmax. 
+
+\begin{figure}
+\ig{pics/robot1}{1}
+\caption{Cartesian agent}
+\end{figure}
+\item
+Now consider a different world. In this world the robot imagines itself in this world. The game involves robots thinking about things like robots.
+
+\begin{figure}
+\ig{pics/robot2}{1}
+\caption{Naturalized agent}
+\end{figure}
+\end{enumerate}
+In the first setting, the robot thinks: Here's one thing I can do, and what it does to the world. It has copies of the world inside it. 
+
+In the second setting: You can't fit a whole copy of the world inside the robot's brain because the robot's brain is in the world. There are no ``functions.'' We don't have a function the robot knows or a well-defined function the robot can learn about. There's nothing that feels like a ``base'' function.
+
+In the second world, there could be other things that reason like the robot.
+
+The first setting is a \vocab{Cartesian agent}---''plug into'' the world. The second is a \vocab{naturalized agent}. 
+
+Question: what are naturalized agents like?
+
+(You can introduce some complications in the Cartesian case by requiring the robot to be smaller than the world.)
+
+There could be a thing in the video game that is a copy of the robot: the robot affects its input-output channel but also something else in the video game.
+
+\subsection{Discussion}
+
+\begin{enumerate}
+\item
+Q: In practice don't fully simulate the world/other agents. What about a partial simulation? But some robot which did more can exploit you?
+
+The mindset is: We're focusing on creating Euclidean geometry, not do the engineering.
+%set up multiple different ontologies that explain this.
+\item
+Only thing that controls is input/output. Contents of agent's head and thought process. You can't split it into input/output channel.
+\item
+Imagine I just thought of the world as neurons firing.  But isn't that isomorphic to knowing about myself?  The thought itself is an action.
+
+``You're optimizing the thing that is doing the optimizing.''
+\end{enumerate}•
+
+
+
+
+%\printbibliography
+%\appendix
+
+
+\end{document}
+
