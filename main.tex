@@ -266,6 +266,86 @@ Even as you're doing math, think in the back of your head of agents reasoning; m
 Courage.
 \end{enumerate}
 
+%3,4,6 same
+
+\section{Diagonalization}
+
+We have a reflection property and fixed point property. In many cases there is a simple relationship.
+
+\begin{df}
+The \vocab{reflection} property: $g$ is a surjection of a set onto a set of functions whose domain is the same set.
+\begin{align}
+g:S\tra T^S
+\end{align}
+\end{df}
+\begin{df}
+The \vocab{fixed point} property: For 
+\begin{align}
+f:T\to T,
+\end{align}
+$x\in T$ with $f(x)=x$.
+\end{df}
+Roughly, if you have the reflection property than every function has a fixed point.
+
+Sometimes we use this in the positive direction; sometimes we use the contrapositive.
+
+Fixed point sounds more mathematical, and reflection sounds more like agent foundations.
+
+$T$ is like states of robot. For each state, do something about that.
+
+Think of $T^S$ as a set of functions from $S$ to $T$ (ex. computable functions, continuous functions, etc.). 
+
+We have a general proof that generalizes the proof that $\neg \exists \N\tra P(\N) = 2^{\N}$. 
+
+\begin{figure}
+\ig{pics/diag1}{1}
+\caption{Diagonalization for $\N\tra P(\N)=2^\N$
+}
+\end{figure}
+To show that statement, consider
+$$
+h: x\mapsto f(g(x)(x))
+$$
+where $f(0)=1$ and $f(1)=0$. Suppose by way of contradiction there is $n\in \N$ such that $n\in \N$, $g(n)=h$. Then
+\begin{align}
+g(n)(n)= h(n) = f(g(n)(n)),
+\end{align}
+so $g(n)(n)$ is a fixed point, contradicting definition of $f$. 
+The proof is even in the positive direction, it (constructively) gives a fixed point. (Picking the $n$ is less constructive.)
+
+We can also look at topological examples. If we have a map $[0,1]\tra \bS^{[0,1]}$ where $\bS$ is the circle (just the boundary).
+
+The sides are the interval. Each ``row''  is a line of directions. Can we have a map from the square to functions $\bS^{[0,1]}$ that lists out all possible maps? No, we can look at the diagonal. This is an ``abstract'' diagonal.
+
+\begin{figure}
+\ig{pics/diag2}{1}
+\caption{Diagonalization for $[0,1]\tra \bS^{[0,1]}$}
+\end{figure}
+
+%if not continuous, not necessarily continuous
+
+%that is like the solution to 3
+%constructively give a fixed point.
+
+Currying relates functions of multiple arguments and functions of 1 argument valued in function space. $\wt g(x)(y)$ is the curried version of $g(x,y)$. $g:\N \to P(\N)=2^\N$ corresponds to $\wt g:\N\times \N \to \{0,1\}$.
+
+%\begin{thm}
+More generally, let $f:T\to T$ and $g:S\to T^S$. For all $x$, consider the function $S\to T$ defined by
+$$
+s\mapsto f(g(s,s)).
+$$
+The fixed point comes from the element of the set that codes for the function. If there is no fixed point, then the map is not surjective.
+
+Lawvere's fixed point theorem works for all cartesian closed categories (roughly, there is notion of composition of functions and products).%\footnote{You can write things that look like programs (cf. lambda calculus).} 
+%all the problems are a corollary.
+All the problems have the same kind of proof, and are corollaries of Lawvere's fixed point theorem.
+%\end{thm}
+%surjectivity assumption
+
+%not entirely constructive  but mostly
+%constructively have ``do something different'', apply $f$. 
+
+Quines use the same idea: call function with code of function as argument. There's a version you can do in computability-land, fixed point is not halting. Modify the construction to not have that problem; this tells you how to make quines.
 
 %\printbibliography
 %\appendix
