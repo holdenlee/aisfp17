@@ -295,6 +295,8 @@ $T$ is like states of robot. For each state, do something about that.
 
 Think of $T^S$ as a set of functions from $S$ to $T$ (ex. computable functions, continuous functions, etc.). 
 
+\subsection{Examples}
+
 We have a general proof that generalizes the proof that $\neg \exists \N\tra P(\N) = 2^{\N}$. 
 
 \begin{figure}
@@ -336,7 +338,7 @@ s\mapsto f(g(s,s)).
 $$
 The fixed point comes from the element of the set that codes for the function. If there is no fixed point, then the map is not surjective.
 
-Lawvere's fixed point theorem works for all cartesian closed categories (roughly, there is notion of composition of functions and products).%\footnote{You can write things that look like programs (cf. lambda calculus).} 
+Lawvere's fixed point theorem works for all cartesian closed categories (roughly, there is notion of composition of functions and products). %\footnote{You can write things that look like programs (cf. lambda calculus).} 
 %all the problems are a corollary.
 All the problems have the same kind of proof, and are corollaries of Lawvere's fixed point theorem.
 %\end{thm}
@@ -346,6 +348,54 @@ All the problems have the same kind of proof, and are corollaries of Lawvere's f
 %constructively have ``do something different'', apply $f$. 
 
 Quines use the same idea: call function with code of function as argument. There's a version you can do in computability-land, fixed point is not halting. Modify the construction to not have that problem; this tells you how to make quines.
+
+%write instructions
+
+\subsection{Lambda calculus}
+There are also positive uses of Lawvere's fixed point theorem.
+
+Lambda calculus is a minimalistic programming language. %haskell without actual haskell functions or datatypes
+Everything is a function, functions are notated literally as lambda terms. For example $(\la \,x.\,x)$ is the identity function, and
+$$
+(\la \,x.\,x)(\la \,x\,y.\,y\,x) = (\la \,x\,y.\,y\,x).
+$$
+We can add more datatypes to give better examples. Let's say we also have arithmetic.
+Then
+\begin{align}
+(\la \,f\,x.\,f\,(f\,x))(\la\,y.\,y+3)(5) 
+&= (\la\,y.\,y+3)((\la\,y.\,y+3)(5))\\
+& =(\la\,y.\,y+3)(8)=11\\
+(\la\,x.\la\,y.\la\,z.\,z\,x) \,7\, (\la \,a. \,a+a) \,(\la\,b.\, b- 5) &=
+(\la\,y.\la\,z.\,z\,7) \, (\la \,a. \,a+a) \,(\la\,b.\, b- 5) \\
+&=
+(\la\,z.\,z\,7)  \,(\la\,b.\, b- 5)\\
+&=(\la\,b.\, b- 5)\, 7=2\\
+(\la\,x.\la\,y.\la\,z.\,y\,(z\,x)) \,(\la\,a.\,2\cdot a)\,(\la\,b.\,b+3)\,10 &=23. 
+\end{align}
+
+Given $f:\La \to \La$, I want a lambda term $x$ that evaluates to $f\,x$:
+$$f\equiv f \,x .$$
+This is asking for a fixed point property.
+
+The functions $\La\to \La$ are exactly the lambda terms, 
+$$\La = \La^\La$$
+so $f\in \La$. (This can be made precise by domain theory.)
+
+Here we have a bijection $\La \tra \La^\La$, lambda terms just are the right sort of function. $g$ is implicit.
+Construct $x$ by the diagonal construction. 
+
+The diagonal map is $y\mapsto y\,y$ which corresponds to $(\la \,y.\,y\,y)$, and the function is $y\mapsto f \, (\la \,y.\,y\,y)$ which corresponds to $\la \,y. f \, (\la \,y.\,y\,y)$. We get
+\begin{align}
+(\la \,y. f \, (\la \,y.\,y\,y))\,(\la \,y. f \, (\la \,y.\,y\,y))
+&= f\, \pa{
+(\la \,y. f \, (\la \,y.\,y\,y))\,(\la \,y. f \, (\la \,y.\,y\,y))
+}
+\end{align}
+%Use this trick to have $x$ be applied to
+This is the Y-combinator. You can use it to implement recursion.
+\begin{align}
+Y&=\la \,f .\,(\la \,y.\,f(y\,y))(\la \, y.\, f\, (y\, y)).
+\end{align}
 
 %\printbibliography
 %\appendix
