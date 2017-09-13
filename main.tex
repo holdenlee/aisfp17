@@ -101,6 +101,136 @@ Fixed point: Has most useful tools to think about this. Think about how fixed po
 Philosophy
 \end{enumerate}
 
+\section{Cartesian agency}
+
+We'll talk about Solomonoff induction and AIXI. 
+
+\subsection{Solomonoff induction}
+
+Solomonoff induction is the theory of learning if you have unbounded computational power.
+
+This was introduced in the original conference on AI in the 1950's. The form that we have today was perfected in the 1990's.
+
+You can get everything by formalizing Occam's razor very hard. We want to believe the simplest theory consistent with all the data, i.e. the simplest computer program generating all the data so far.
+
+We want a Bayesian prior probability that conforms to this.
+
+\begin{df}
+%Turing defined 
+A \vocab{Turing machine} has three tapes.
+\begin{enumerate}
+\item
+an output tape. Once it outputs a bit it can't rewrite it.
+\item
+working tape going infinitely in each direction. You can move in either direction, and rewrite as you want.
+\item
+input tape (program tape), can't go backwards.
+\end{enumerate}
+
+A \vocab{universal Turing machine} $U$ is such that for any other Turing machine $T$ in this form, 
+there is a program, i.e., a finite string of bits which we can put as prefix to the input to the universal Turing machine $U$,\footnote{Make sure no program is a prefix of another program. The probability of a program is $2^{-l}$ where $l$ is the length of the encoding.} before the input to $T$, so that $U$ will give the same output.
+% so that it with end at position $l$ and all the rest of the inputs will be treated as inputs to the machine $T$.
+\end{df}
+
+\begin{df}
+The \vocab{universal semimeasure} is a distribution on infinite bitstrings. When we feed in random bits to the universal Turing machine, we get bits out. $M(p)$ is the probability of getting $p$ as prefix to the output.
+%, get bits out that are somewhat random 
+\end{df}
+%stop asking for input
+
+\begin{figure}
+\ig{pics/solo1}{1}
+\caption{Solomonoff induction}
+\end{figure}
+
+Halting issues make $M$ uncomputable, but also makes something interesting happen.
+
+Given 0100111, what's the probability that the next bit is 0/1? They don't sum to 1 because there's a probability that the machine doesn't output anything further.
+
+Solomonoff thought this was a problem. The Solomonoff normalization is as follows.
+\begin{df}[Solomonoff measure]
+Conditioned on a next bit being outputted, what is the probability that it is 0/1?
+\end{df}
+Note this is different from conditioning on strings that give infinite output.\footnote{For the Solomonoff measure there's the odd thing of ``jumping'' to a different model if a model stops giving output at a particular step.}
+
+%It's the unique (?) machine 
+The distribution has the following nice property: If $l$ is length of shortest program that gives everything so far, then the probability of the output is at least $2^{-l}$. This gives a lower bound on probability of specific observation.
+
+%fuzzy between program and data
+
+Doing science is about predicting sensory observations, trying to figure out what the input bits might be that emitted the particular output (scientific observations).
+
+Bayes loss quantifies prediction error in sensory  observations. %Predicting some particular bit, output a probability $p'$. 
+The loss is $-\lg (p')$ where $p'$ is the probability you assign to the event that happens (ex. bit that is output).
+%deep dark Bayes hell
+
+Any amount of Bayes loss is because the universal measure assigned probability $2^{-l}<1$ to the correct program.
+
+When you do Bayesian update, you cut out all programs which don't give the correct next bit. You must be increasing the probability of the correct program by $\rc{p'}$. (Renormalize good programs to sum to 1.) I can only increase it so much before it's 1.
+
+I.e., Bayes loss is at most $-\lg\prc{2^l}=l$.
+
+This is nice but also dissatisfying: we assume computable environment. It would be nice to deal with stochastic worlds, randomness in lives. 
+Maybe we'll never learn true equations of physics or use them to fully predict output.
+
+Can Solomonoff induction predict good stochastic models of the world? Yes.
+
+We can emulate stochastic Turing machines. Consider a Turing machine taking in input and using randomness to give output. Use the rest of the coin flips on input tape of the UTM as randomness. (You lose probability mass every time, but not more than you would lose representing a probabilistic hypothesis.)
+
+%finite loss according to ML method you claim works well on the environment.
+%I can write some program that does better.
+%I can talk about some not deterministic computable...
+%treat with my ML method of choice
+%SI can learn to emulate if indeed best way to predict environment
+%Can have infinite loss if infinite randomness
+
+You get finite loss compared to whatever other machine learning algorithm that works in that environment. (Total loss can be infinite if there is infinite randomness.)
+
+\subsection{AIXI}
+
+%reinforcement learning agent
+We define a universal (reinforcement learning) agent that uses the universal semimeasure or Solomonoff induction.
+
+The universal Turing machine has a new tape that is the action tape. The agent gives the actions which the environment takes in.
+
+Some number of bits forms a time step. $R$ is a function of these bits and outputs a reward.
+
+\begin{figure}
+\ig{pics/aixi1}{1}
+\caption{AIXI}
+\end{figure}
+
+Have a finite horizon which you treat as the end of time. Make a tree of possible actions %from
+back to the current time. Maximize reward.
+
+We can do things to get rid of the horizon function: use discounted reward and take the limit forwards.
+%how can we make this ``consistent'' - and not e.g. fail at some future point?
+%or keep pushing forward
+%cognitive biases
+Exponential discounting is temporally consistent.
+%only way to have time-consistent preferences
+%ex. money
+%won't modify inconsistently because of discounting function 
+
+In what sense is this optimal?
+You don't necessarily get to the optimal policy. 
+
+It's doing best thing according to universal distribution. You can modify AIXI: do some exploration---ex. open a door to find out what happens. If you do exploration in the right way, you can converge to the right optimal policy. %The reason you converge
+But if there may be traps in the environment---opening the door may lead to infinite hell. ``You're doing all the things you should be doing in hell.'' This is the sense that you can converge to the optimal policy.
+
+%You need to explore to do well, go in the trap.
+Do we want Bayes optimal, optimal thing that falls in traps,...? This is unclear.
+
+%AIXI-js
+
+%(It could have a fear that looking out the window has a terrible problem.)
+
+%Explore to best of ability.
+%best policy
+
+%VOI - value of information.
+%finite regret?
+
 
 
 %\printbibliography
