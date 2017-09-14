@@ -554,7 +554,155 @@ If A coops only if it proves B coops, and B defects only if it proves A defects.
 %neither can prove. 
 %defect, coop
 
+\section{Game theory}
 
+\subsection{Nash equilibria}
+
+A prisoner's dilemma has the payoff matrix
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+& C & D\tabularnewline
+\hline
+C& 2,2 & 0,3\tabularnewline
+\hline
+D&3,0 &1,1\tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+No matter what the other player does, I'm better off defecting. It's a dominating strategy to defect. It's a pure Nash equilibrium for both players to defect.
+
+\begin{df}
+$(A,B)$ is a  \vocab{Nash equilibrium} if no player has an incentive to change their actions, 
+\begin{align}
+u_1(A,B)&\ge u_1(A',B) &\forall A'\\
+u_2(A,B)&\ge u_2(A,B') &\forall B'.
+\end{align}
+\end{df}
+There are games for which there doesn't exist a pure Nash equilibrium, for example, matching pennies.
+
+Row player wins if they put pennies the same way and column player wins if they put pennies different ways.
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+& H & T\tabularnewline
+\hline
+H& 1,-1 & -1,1\tabularnewline
+\hline
+T&-1,1 &1,-1\tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+%This is already pictured with our Cartesian agency.
+
+First we'll suppose the other player's action is fixed; how does my action control the utility?
+
+\begin{enumerate}
+\item
+Suppose $P(p_2=H)<\rc 2$. Then I want to pick tails.
+\item
+Suppose $P(p_2=H)>\rc 2$. Then I want to pick heads.
+\item
+If $P(p_2=H)=\rc2$, I am indifferent. (E.g. I could randomize.)
+\end{enumerate}•
+The intuition is what you should do is randomized. We can formalize this with \vocab{mixed Nash equilibrium}. We have the same defining conditions but the strategies are probabilities.
+
+There is a unique mixed Nash equilibrium for matching pennies. 
+\begin{enumerate}
+\item
+Player 1 plays $\rc2 H + \rc2 T$.
+\item
+Player 2 plays $\rc2 H + \rc2 T$.
+\end{enumerate}
+
+Note this is intentioned with the non-naturalized, Cartesian picture, and it's not clear what the naturalized picture is.
+
+%no incentive to randomize
+%superrational FDT
+
+%If second agent 
+%predictable and exploitable
+%In nash equilibrium, both players doing argmax over other player. 
+The world cannot simultaneously pick the best thing in response to what you're doing without breaking.
+We're thinking of this as a 2-player game, responding to what they expect other player to do. This is already bringing in some complexities (but not all) from naturalization. We still have a well-defined interaction with the world but there's a recursive thing that can go on with the agents.
+
+The world can't optimize to take advantage of you but other agents can. This is a problem if we can't identify agents in the environment; the game theory versus players and the environment is different.
+%break if put in agents, don't 
+%if can't identify agents in env
+%separate magisteria: game theory vs. players and environment.
+
+Our outline is the following.
+\begin{enumerate}
+\item
+Prove existence of Nash equilibria.
+\item
+Philosophy
+\item
+Reflective oracles
+\end{enumerate}•
+Logical induction gives better philosophical grounding than reflective oracles, but we'll discuss this later.
+
+%It's hard to find because fixed point theorems aren't that constructive.
+
+Kakutani's fixed point theorem is stated in terms of set-valued functions.
+\begin{thm}[Kakutani's fixed point theorem]
+Let $S$ be a nonempty compact convex subset of a Euclidean space.
+
+Let $f:S\to 2^S$ be a set-valued function (multi-valued function) with a closed graph $\set{(s,t)}{t=f(s)}$ pointwise nonempty and convex. (Each $f(s)$ is a nonempty convex set.)
+%can take multiple values, but not no values.
+\end{thm}
+For example, an infinitely steep S-curve is such a multivalued function.
+
+\ig{pics/game1}{1}
+We apply this to $S=S_1\times S_2$, the total strategy space. Here $S_i$ is the space of mixed strategies over actions available player $i$, $S_i = \De (A_i)$, the simplex of probability distributions over the actions.
+
+For example, when there are 2 actions, $S=[0,1]^2$ is a square.
+
+\begin{figure}
+\ig{pics/game3}{1}
+\caption{Functions which satisfy the conditions in the Kakutani fixed point theorem}
+\end{figure}
+
+Then there exists $s\in S$ such that $s\in f(s)$.
+
+Something which is not the same as Kakutani functions but which is useful for intuition pumps is the limit of a sequence of continuous functions (e.g. become steeper and steeper). It also has a fixed point property.
+
+Consider a $n$-player game, $S=S_1\times \cdots \times S_n$. Define the best response function $f:S\to \cP(S)$ by
+\begin{align}
+f(s_1,\ldots, s_n) &= 
+\set{s_1}{\forall s_1'\in S_1,\quad u_1(s_1,\ldots, s_n)\ge u_1(s_1',\ldots, s_n)}\times \cdots \subeq \cP(S).
+\end{align}
+Kakutani's Theorem gives the existence of
+$$
+(s_1^*,\ldots, s_n^*)\in f(s_1^*,\ldots, s_n^*).$$ 
+Then no one has an incentive to deviate so this is a Nash equilibrium.
+
+For example, the game of chicken: we drive towards each other. A person who turns aside (swerve) is chicken and lose; if both people dare, they crash into each other.
+S is swerve and D is dare.
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+& S & D\tabularnewline
+\hline
+S& 0,0 & 0,1\tabularnewline
+\hline
+D&1,0 &-10,-10\tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+When player 1 swerves, player 2 definitely wants to dare, when player 1 dares, player 1 definitely wants to swerve.
+
+\begin{figure}
+\ig{pics/game4}{1}
+\caption{Game of chicken}
+\end{figure}
+
+The 2 functions are individually Kakutani functions, put them together to get $S_1\times S_2\to \cP(S_1\times S_2)$. 
+
+There are 3 different Nash equilibria where the graphs intersect, 2 pure ones. In the mixed one, each dares with small probability.
 
 
 %\printbibliography
