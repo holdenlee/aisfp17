@@ -704,6 +704,61 @@ The 2 functions are individually Kakutani functions, put them together to get $S
 
 There are 3 different Nash equilibria where the graphs intersect, 2 pure ones. In the mixed one, each dares with small probability.
 
+\subsection{Naturalization}
+
+%curious and interested about the things
+
+We used Brouwer to do game theory (Brouwer and Kakutani are basically the same thing). Further applications:
+\begin{enumerate}
+\item
+We use Brouwer to address coherence and reflection: you can't have coherent probabilities and reflection because of L\''ob's Theorem, one of the problems Lawvere caused. We used Brouwer to overcome it by assigning infinitesimal probabilities to things.
+
+Tarski's Theorem: You can't write down what it means for something to be true because then you could diagonalize against yourself: $\neg T(\ce{\phi}) \lra \phi$. 
+Instead of having truth values being true or false, we can have continuous truth values. If not is $1-\bullet$, then we can make the truth value $\rc2$... we can use Brouwer to have a consistent way of saying whether or not things are true. We get reflection within any infinitesimal bound, one direction but not the other.
+\item
+We can solve the halting problem by having an oracle that gives the answer. Once you've added, you want to ask when do machines with that oracle halt? You can continuously add and have a hierarchy. You can add an oracle to the robot, but it's reasoning about things with a oracle, which breaks it.
+
+We want to give something like a halting oracle---reflective oracle---it doesn't just tell you whether normal machine halt, but whether machines with a reflective oracle halt. It does this probabilistically. You ask it questions of the form, does this halt with probability $>\rc2$. Answering randomly is like having a Kakutani-type thing. 
+\item
+The last thing we use Brouwer for is an agent reasoning about its future self, the L\"obstacle. Using logical induction we can model this pretty well; have things that trust themselves almost completely. They manage it without diagonalizing against themselves by using Brouwer.
+
+\end{enumerate}•
+
+
+
+A lot of problems we had before in Lawvere world we are good in Brouwer world. But in Brouwer we can't come up with a good way to choose the fixed point.
+
+If I were to move my function around, I can bring it back to where it started, and if you move the fixed point continuously you would end up somewhere else.
+
+There are these fixed point god things that choose where you go.
+
+In game theory you have a whole bunch of Nash equilibrium.
+
+It would be nice to have 1 rather than 2 fundamental truths about the universe (Lawvere, Brouwer). I'm curious to whether you can connect them.
+
+We showed we can't have a surjective function $X\tra (X\to \bS)$ because there is a map $\bS\to \bS$ without fixed points.
+
+Is there $X\tra (X\to [0,1])$? Then you can prove Brouwer using Lawvere.  I know what the proof would look like if I can find $X$...
+
+Another reason I would like this: have model of agents reasoning about other agents. Agents react to other agents' policies.
+\begin{enumerate}
+\item
+Imagine $X$ is a space of codes (a topological space) a program can have.
+\item
+$X\to [0,1]\to [0,1]^X$ is a space of policies. I look at opponent's code and cooperate with some probability.
+\item
+ $X\to (X\to [0,1])$ is interpreter that takes in code and returns policy. %; encode policy with come code. 
+ Code implements policy $X\to [0,1]$ when you run it.
+\end{enumerate}
+
+This seems to connect to fundamental secrets of the universe.
+
+\section{Decision theory}
+
+I'll work in a space where there's not a distinction between CDT and EDT, or we're using EDT.
+
+
+
 
 %\printbibliography
 %\appendix
