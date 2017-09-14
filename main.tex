@@ -396,6 +396,166 @@ This is the Y-combinator. You can use it to implement recursion.
 \begin{align}
 Y&=\la \,f .\,(\la \,y.\,f(y\,y))(\la \, y.\, f\, (y\, y)).
 \end{align}
+(Note: 2 lambda terms are the same if they can be reduced to the same thing. However, this equivalence is not computable.)
+
+\subsection{Applications to logic}
+%{L\"ob's theorem}
+
+I'll discuss applications to logic and to Agent Foundations.
+
+I'll do logic with as little logic as possible. Let $L$ be a language like the language of Peano arithmetic. Let $L_n$ be formulas with $n$ free variables.
+
+These are sentences in $L_0$:
+\begin{align}
+2+2&=3\\
+\forall x.\, \exists y.\, y&>x.
+\end{align}
+These are formulas in $L_1$:
+\begin{align}
+2+n&=3\\
+\forall x.\, x+n&=x.
+\end{align}
+Here $x,y$ are quantified variables and $n$ is a free variable.
+
+$2+2=3$ is a sentence and $\ce{2+2=3}$ is code for a sentence (a number).
+
+%We have a common application to , the diagonal lemma. 
+One application is the diagonal lemma.
+\begin{lem}[Diagonal lemma]
+For all $\ph\in L_1$, there is $\psi\in L_0$ such that 
+$$
+\vdash\ph(\ce{\psi}) \lra \ph.
+$$
+\end{lem}
+``$\vdash$'' means provable, $\vdash 2+2=4$, $\not\vdash 2+2=3$.
+
+%operate as if operate on strings, ex. can easily OR.
+
+Tarski's undefinability theorem: is there a formula $T\in L_1$ that codes for a true sentence? Suppose there is
+$$
+T(\ce{\psi}) \lra \psi.
+$$
+By the Diagonal Lemma, since $\neg T(n)\in L_1$, we can find $\psi$ such that 
+$$
+\vdash \psi \lra \neg T(\ce{\psi}).
+$$
+%provability vs. truth/definability/expressibility
+%we know there are some undefinable predicates because countably many definable
+%come predicates undefinable
+
+\subsubsection{L\"ob's theorem}
+
+A second application of the diagonal lemma is L\"ob's Theorem. Given $\psi$, let $\square \ce{\psi}$ be the statement that $\psi$ is provable. This is definable. (There exists a number encoding a proof of it.)
+
+Under which conditions is 
+$$
+\vdash \square \ce{\psi} \to \psi?
+$$
+%self-fulfilling proofs
+
+The box is a formula in our language (that takes in number as input), and the turnstile is meta-mathematically saying that what's to the right can be proved. 
+%if sound, anything provable is true
+
+%G\''odel's incompleteness theorem says you can't have consistency and completeness at the same time.
+
+This is true when $\psi$ is provable. Also for self-fulfilling proofs. (If agent can prove it turns left, it turns left.) %If whenever $\psi$ is provable. 
+Are there other sentences for which this is provable? L\"ob's Theorem says no.
+
+\begin{thm}[L\"ob's Theorem]
+$$
+\vdash \square \ce{\psi} \to \psi \implies \vdash \psi.
+$$
+\end{thm}
+
+Suppose an agent is such that if the agent finds a proof that it goes left, it goes left. Then L\"ob's Theorem says it goes left.
+
+L\"ob's sentence is constructed using the diagonal lemma.
+
+In the context of an agent, this has weird consequences. We might want it to believe soundness about itself: believe things it's proven, i.e., assert anything it's proven is true. If it assigns probabilities, consider the sentences it assigns probability 1 to. It can self-referentially form the sentence
+\begin{align}
+\Pj(\phi)=1\to \phi.
+\end{align}
+This is soundness applied to belief rather than provability.
+
+L\"ob's Theorem only uses simple facts about provability such as 
+$$
+\vdash \square \ce{\psi} \to \square \ce{\square \ce{\psi}}.
+$$
+
+In the belief case, you can recover many properties of provability. If agent assigns probability 1 to $\Pj(\phi)=1\to \phi$, it has to already believe (assign probability 1) to $\phi$. 
+%limit way think about itself in way that it's surprising.
+
+We can think about the agent as wanting to plan for its future self. It's a desirable property that the agent at time 0 will think it will form correct judgments at time 1. Then the agent at time 1 has to be doing proofs in a different theory than at time 0. If agent at time 1 is doing proofs in PA and so is the agent at time 0, then this property can't hold.
+$$
+\vdash_{ZFC} \square_{PA} \ce{\phi}\to \phi.
+$$
+Reduction in power is not a satisfying way of solving the problem.
+
+There is a bounded variant of L\"ob's theorem (up to proofs of certain length).
+
+%\forall\psi( \square \ce{\psi}\to \psi)\to \psi
+%then every statement is provable, and not consistent.
+%turnstil and box could refer to different systems. PA+soundness as turnstile.
+
+%obfuscate trick from system itself
+%unsound?
+
+What if you're always in ZFC, trusting subcomponent of PA?
+
+You can have partial self-modification as long as you can prove to trusted core that modification is OK. But you can't convince the trusted core to modify itself.
+
+Coherence and reflection conditions on probability distribution.
+\begin{df}
+$\Pj$ is \vocab{coherent} if
+\begin{enumerate}
+\item
+If $\vdash \perp \ph'$ then $\Pj(\ph)=1$. 
+\item
+If $\vdash \ph\to \psi$ then $\Pj(\ph) \le \Pj(\psi)$. 
+\item
+$\Pj(\ph\wedge \psi)+ \Pj(\ph\vee \psi) =\Pj(\ph) + \Ph(\psi)$.
+%$\Pj(\ph)<a $ iff $\Pj(\Pj(\ph)<a)=1$.
+\end{enumerate}
+$\Pj$ has \vocab{reflection} if
+$$
+\Pj(\ph)<a \text{ iff } \Pj(\Pj(\ph)<a)=1.
+$$
+\end{df}
+%LI far from coh?
+$\Pj$ can't be coherent and reflective at the same time.
+
+\subsubsection{L\"obian handshake}
+There is 1 positive thing we can do with L\"ob's Theorem that lets us implement something we would want to implement: L\"obian handshakes to implement coordination in certain game-theoretic situations such as Prisoner's dilemma.
+
+If the robot proves that it will turn left, it will turn left (assuming it is provable in the same system).
+
+Consider 2 agents $A, B$, playing Prisoner's Dilemma, each cooperates if it can prove the other agent cooperates.
+\begin{align}
+A&=\text{coop} \lra \square \ce{B=\text{coop}}\\
+B&=\text{coop} \lra  \square \ce{A=\text{coop}}.
+\end{align}
+We have $A=\text{coop}\wedge B=\text{coop} $ because
+\begin{align}
+\vdash& \square 
+\ce{A=\text{coop} \wedge B=\text{coop}} \to 
+A=\text{coop}\wedge B=\text{coop}\\
+\vdash &A=\text{coop}\wedge B= \text{coop}.
+\end{align}
+They are looking for the cooperation handshake. Decide what handshake to look for, define what looking for means...
+\begin{enumerate}
+\item
+If you replace coop with defect, then both defect.
+\item
+If A coops only if it proves B coops, and B defects only if it proves A defects. Neither can prove what the other does, so A defects and B cooperates.
+\end{enumerate}•
+
+%what if other defect
+%not mutual coop
+%neither can prove. 
+%defect, coop
+
+
+
 
 %\printbibliography
 %\appendix
