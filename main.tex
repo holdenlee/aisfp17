@@ -513,7 +513,7 @@ If $\vdash \perp \ph'$ then $\Pj(\ph)=1$.
 \item
 If $\vdash \ph\to \psi$ then $\Pj(\ph) \le \Pj(\psi)$. 
 \item
-$\Pj(\ph\wedge \psi)+ \Pj(\ph\vee \psi) =\Pj(\ph) + \Ph(\psi)$.
+$\Pj(\ph\wedge \psi)+ \Pj(\ph\vee \psi) =\Pj(\ph) + \Pj(\psi)$.
 %$\Pj(\ph)<a $ iff $\Pj(\Pj(\ph)<a)=1$.
 \end{enumerate}
 $\Pj$ has \vocab{reflection} if
@@ -757,7 +757,154 @@ This seems to connect to fundamental secrets of the universe.
 
 I'll work in a space where there's not a distinction between CDT and EDT, or we're using EDT.
 
+We have assignments of probabilities $P_n$ (or expectations $\E_n$) to logical sentences. We build decision theory out of this. 
 
+Consider an agent $A_n$, choosing between action 1 or 0. 
+\begin{align}
+A_n &= \begin{cases}
+1,&\text{if }\E_n(U_n | A_m=1)> \E_n(U_n|A_n=0)\\
+0,&\text{otherwise.}
+\end{cases}
+\end{align}
+For logical inductors, for many properties, in the limit, as we make the parameter large enough, the property holds. We would like for $A_n$ to choose the better action in the limit.
+
+For this talk, assume all utilities are bounded.
+Suppose $U_n=A_n$.
+
+Given all the things logical inductors do well, you might think it might take action 1 in the limit. 
+
+Logical inductor learns by feedback. If it takes action 1 all the time, it can never really learn what happens if it takes action 0. It could take action 1 all the time.
+
+Alternatively, it could take action 0 all the time, believe if it takes action 0 it gets 0 reward, and believe if it takes action 1 it gets $-10^9$ reward.
+
+This is very much like evidential decision theory. The problem is that if you take a conditional on something with probability 0, bad things happen.
+
+You can get this phenomena in all kinds of things. When you condition on something approaching 0, things can be bad.
+
+This is a problem for EDT. For CDT we give it a big structure: this is the node that's you, for each action this is what happens. I understand how to optimize that, using $\amax$. 
+
+In our picture, if I didn't take action A, it's hard to say what happens if I did take action A.
+
+(There may be agents that search for proofs. Isn't there a short proof that $A_n=1$ gives $U_n=1$? But there may also be a proof that $A_n=1$ gives $U_n=-10^9$.)
+
+Note the problem can only happen all the way---if the agent chooses 1 half the time, then it will see what happens in both cases.
+A (bad) way to deal with this is $\ep$-exploration. Do random thing with probability $\ep$, and learn what things happen.
+
+\begin{align}\label{eq:dec2}
+A_n &=
+\begin{cases}
+1&\text{if }\Pj_n (A_n=1)<\ep\\
+0&\text{if }\Pj_n(A_n=0)<\ep\\
+1&\text{if }\E_n(U_n|A_n=1)> \E_n(U_n|A_n=0)\\
+0&\text{otherwise}
+\end{cases}•
+\end{align}
+If you know you're not going to take the action, take the action. This is different from randomizing.
+If the agent is almost certain won't take action, will take action just to see what happens. 
+
+What happens is if it's almost certain it will take an action, it shifts the probability down to $1-\ep$.
+
+This is like the liar's sentence (this sentence is true with probability $<\rc2$---randomize when probability is around $\rc2$). %if I assign it
+%If I assign it probability $\rc2$ it 
+The probability would converge to $\rc2$ and wiggle so it's above/below it half the time.
+
+This algorithm is unsafe: When you take actions, you don't just lose the local game---What happens if you self-modify into a chicken?
+
+Ignoring this, it works, because when it takes conditional probabilities, it takes them bounded away from 0.
+
+Now consider 
+\begin{align}\label{eq:dt-pd}
+U_n = 10\Pj_n(A_n=0)+A_n.
+\end{align} %There's 2 ways to think about this. One
+This is %of 
+playing a prisoner's dilemma against an agent of similar power that thinks ``I will coop with probability I think you cooperate.''
+
+You want it to believe it's going to choose 0 and play 1. But you can't get both!
+%learn from past examples
+
+%not exactly past frequencies but close
+%mixture of things trying to predict what you'll do based on what you've done.
+
+I claim that the agent defined by~\eqref{eq:dec2} defects all except $\ep$ of the time.
+Suppose it cooperates most of the time. 
+The times it randomly defected, its opponent doesn't predict it, so it gets reward!
+
+%opaque box, don't view structure of stuff
+%if press other button, extra box
+%I view as opaque 
+When I explore and defect, it starts paying me less. At some point I get suspicious... But if you try cooperating you get even less again...
+
+The logical inductor already knows $\Pj_n(A_n=0)$. So when it does expected value calculations, it can treat it as a constant.
+
+%it goes into wrong fixed point?
+
+Suppose you're playing Prisoner's Dilemma against someone with similar prediction skill to you and knows you about as well as you know yourself. They're going to predict whether or not you cooperate.
+
+%Set up future me for failure.
+
+Imagine you didn't know the fact, $U_n=10\Pj_{f(n)}(A_n=0)+A_n$ where $f(n)$ is a fast-growing function. Now pretend the predictor is really good. It's going to cooperate.
+
+%Before I had a weak predictor. When I made the predictor strong.
+
+%deterministic program lives in logic.
+%it's not obvious this is the wrong thing to do.
+
+%Q: what if lookforward?
+%Q: why can't realize if you flip?
+
+%why different based on how it is being predicted.
+
+%what if someone predicts you as well as you predict yourself?
+
+%They're equally good at predicting you as you are at predicting yourself.
+
+%deterministic algorithm for each $n$
+
+%for each $n$ it has a value 0 or 1
+%built using quining and logical inductor
+%you're being predicted using same LI
+%in one case, using current beliefs, in other case, using future (more accurate) beliefs.
+
+
+\subsection{Updatelessness}
+
+The standard example: I flip a coin and it comes up heads. You trust me and I'm a good predictor of you. I decided I would give you \$100 if it comes up tails but only if I predicted you gave me \$10 if it come up heads.
+
+Now I'm asking you to give me \$10. Do you give me \$10?
+
+%Coin is H
+%If you give 10 dollars on H, you get 100 dollars on T.
+
+It's important that you actually give me \$10 in this situation. If yesterday you knew you wouldn't, you want to self-modify to give me \$10. Then you're not reflectively consistent: you want to modify yourself into something consistent.
+
+I claim that the thing going on in~\eqref{eq:dt-pd} is similar.
+
+The way we solve this is by going to the beginning of time. Rewind the tape, you didn't tell me this yet. In my prior I have some prior probability that the coin comes up heads. I work on that prior probability. I choose the policy (if it comes up heads I give \$10, if it comes up tails I get you \$100). 
+
+I don't update on the coin flip. I keep original probabilites on coin flip. %; choose a policy that is a policy from observations to what I did.
+
+Updatelessness: the coin came up heads but there's this other multiverse where the coin came up tails and I want to help that version.
+
+Updatelessness is good but it's set up in a Bayesian framework.
+
+A prior at the beginning of time is very big, if it has all the logical statements... We don't know how to combine the idea of updatelessness with computation. We can only state it in Bayes's world.
+
+%Suppose the future version of you can see the past version.
+%Logical induction is incompatible with having a prior on logic.
+
+%simulations nonconscious
+%I don't know I'm not
+
+%proof that millionth digits of pi is 0, 1
+%You have to be simultaneously looking at proof and optimizing for world where millionth digit is 0.
+What if instead of ``coin is H'', it's ``millionth digit of $\pi$ is odd''? Suppose Omega is not adversarial (in choosing the millionth digit). Then if you don't do the same thing, you're not reflectively consistent!
+%Omega is not adversarial
+
+Logical updatelessness is not understood. 
+
+%part of me in different multiverse
+%make handshakes with each other
+%probability world where we've solved this problem
 
 
 %\printbibliography
