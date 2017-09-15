@@ -42,7 +42,7 @@ It thinks about what happens if it puts in inputs A and B; which input would giv
 \item
 Now consider a different world. In this world the robot imagines itself in this world. The game involves robots thinking about things like robots.
 
-\begin{figure}
+\begin{figure}[h!]
 \ig{pics/robot2}{1}
 \caption{Naturalized agent}
 \end{figure}
@@ -138,7 +138,7 @@ The \vocab{universal semimeasure} is a distribution on infinite bitstrings. When
 \end{df}
 %stop asking for input
 
-\begin{figure}
+\begin{figure}[h!]
 \ig{pics/solo1}{1}
 \caption{Solomonoff induction}
 \end{figure}
@@ -905,6 +905,148 @@ Logical updatelessness is not understood.
 %part of me in different multiverse
 %make handshakes with each other
 %probability world where we've solved this problem
+
+\section{Honest induction problem}
+
+This is also known as Goodhart's law, or the rocket problem.
+%robust induction
+
+\begin{enumerate}
+\item
+Rocket problem/Goodhart's law
+\item
+Logical induction as robustness solution.
+\item
+Examples/intuitions
+\end{enumerate}•
+We ask a robot to build rockets. The robot goes off and thinks about rockets. The robot comes up with plans for how a rocket should look. It returns a rocket plan to us.
+
+\begin{figure}[h!]
+\ig{pics/rocket}{1}
+\caption{The rocket problem}
+\end{figure}
+
+We look over the plan and evidence that went into its design, and evaluate how good the rocket would be, for example, how good it would be at getting to the moon. 
+There are many reasons this could be hard.
+
+Let $E_{\text{me}}$, $E_{\text{robot}}$ be the evidence I and the robot have gathered.
+We have posteriors
+$$
+\Pj(\cdot |E_{\text{me}}) \quad \Pj(\cdot |E_{\text{robot}}).
+$$
+ If we were both Bayesians, we can ask the robot to give all its evidence to me, and get 
+ $$
+ \Pj(\cdot |E_{\text{me}}\wedge E_{\text{robot}}).
+ $$
+I would be at an epistemic advantage compared to me or the robot before.
+We can't do this with logical inductors.
+ 
+The most important sense in which logical inductors aren't Bayesian is that we can't point to the evidence.
+
+Can we look into a Solomonoff inductor or neural network and ask why does it believe what it believes?
+
+\vocab{Goodhart's law} says:
+When a measure is used as a target, it ceases to be a good measure. In normal cases it is correlated with some desired objective. When it is being optimized, it becomes an extreme case and it may stop being correlated with the objective.
+
+A lot of scenarios of AI going wrong are like this, e.g. paperclip optimizer.
+
+%talk about how good beliefs are
+%missing something
+%proxy that when pushed to extreme range stops being good measure.
+
+We have good results about logical induction. How will a logical inductor actually do in practice?
+
+Consider $n=10^{10}$. 
+What traders have a lot of wealth on this day, and what are they predicting. Traders that did a good job early on are wealthy. They found ways the market or other traders were being stupid. A trader has a list of other statements and considers what it should bet on. It has a large amount of time to compute various facts that help: what to think about more, should I think about what other traders do, do I look for inconsistencies between different facts on the market... It has computational resources and has to think about how to allocate them.
+
+Personifying the trader,  I think some simple relationships should hold; if they are outside bounds, make a trade on it. This doesn't mean these traders will earn a lot of money early on.
+%runtime 
+Traders have initial weight dependent on complexity of program describing trader. It seems this is relatively simple and uses little computation.
+
+I expect things like this exist and get money early on; later on other traders stop throwing money away, the trader starts being more cautious, market becoming more rational over time... Specifying all these things separately seems more complicated than having general-purpose optimizer. 
+
+If I ask my logical inductor about statements, I'm asking the trader, what will you tell me about this statement?
+
+%honestly tell me if we impute beliefs to it
+If it is optimized to do other things, it would try to control the external world, and the first thing it would do (for instrumental reasons) is to make good predictions.
+%It may be instrumentally incentivized 
+Making good predictions so far is often a proxy for making good predictions in the future. %When we push to extreme values, we have to think
+But will it continue to make good predictions? 
+%Has it made good predictions so far, and why should I expect these correlations to 
+Why should I expect it to continue to make good predictions?
+%continue to work?
+
+%Are we searching a space of programs that are optimizing generally?
+
+I want to update on what my robot believes about rockets. %My robot acts closely enough
+%Logical inductor
+Then we have this Bayesian intuition that I have a good idea what happens in the future. Since we don't have this Bayesian picture, we can't just update on evidence. 
+
+Traders give output, and we have this Goodhart question of whether we can trust the output.
+
+%wait until particular point in time and do something weird.
+
+Solomonoff induction is a reasonable prior but has all computations inside of it. Any computation could have something to say about the world.
+
+%economic reasons for goodhart's law.
+
+%can't trust things robot decides to say.
+%things we can trust in certain way by logical induction process, come up with robust predictions
+%Suppose we build rocket. Look forward to predictions of launch
+%trader sabotaged rocket.
+%make bets rocket will succeed.
+%stuff doing actual thinking is making ...
+We want to impute traders as having beliefs. Logical inductor has beliefs, but the traders are just structured to be an algorithm.
+
+%The amount that Solomonoff induction expects $2^n$ after Big Bang to be weird is just as much as I think
+%what the natural category is
+%complexity penalty
+
+%trap
+
+%We don't want to assume bounded loss at each step.
+
+%nonconvergence of utility under SI?
+
+%hyp specify situation
+%also specify utility function and attach function
+%complexity goes down
+%util specified goes up as BB(n)
+
+%1 trader doing treacherous turn.
+
+%Is one LI strictly more informed than another? Ex. one has access to another's sensory data. One is no less trustworthy than another?
+
+%trust them more if got rest of architecture right?
+
+%one LI does well
+%planck interval
+
+\subsection{Naturalization as instance of honest induction problem}
+
+If I had Solomonoff induction, sequence prediction predicting all the facts about the universe, then maybe the universe is simple, and we can trust the prediction.
+
+That's not a situation that's physically possible to put a predictor into. Instead the predictor has e.g. cameras looking at particular things. I'm interested in photons coming from this tree. This is way more algorithmic information than the universe.
+
+We ask: which hypothesis has short description of %universe and
+ this camera feed?
+%quantum branch of universe
+
+%(We don't expect the simple explanation to have the rest of the universe.) Programs length $n$. some other programms $n-\lg(bajillion)+constant$ produces same output. Specifying outputs in certain order, arithmetic code
+%which one is simpler hyp
+
+%It's hard to read out from physics what the camera is doing.
+General purpose optimizers making predictions of the world with an incentive can be specified in fewer bits than that. %incentivize to follow camera.
+It's fewer bits to follow the camera (generating the same bits) by being a general-purpose optimizer than having a general theory.
+%simple goal to want to follow camera
+
+\ig{pics/universe}{1}
+
+%agents in math space, care about universe
+
+%In SI, have hypotheses that are computer programs printing out infinite sequences of bits.
+
+%crawl down from math into the world
 
 
 %\printbibliography
